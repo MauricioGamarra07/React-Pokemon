@@ -3,6 +3,8 @@ import React from 'react'
 function Cards({name}) {
 
     function validarCarta(carta, destino, contenedor){
+        console.log("Carta: " + carta);
+        console.log("Destino: " + destino);
         if (carta==destino && contenedor.classList.contains("error")==false){
             contenedor.classList.add("correcto")
         }else if(carta!=destino && contenedor.classList.contains("correcto")==false){

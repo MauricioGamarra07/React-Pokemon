@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import './App.css'
 import Cards from './assets/components/Cards'
 import Switch from './assets/components/Switch'
+import Loader from './assets/components/Loader'
 
 function App() {
 
@@ -9,10 +10,15 @@ function App() {
 
   const [pokemon, setPokemon] = useState([]);
 
-  const [arrayCartas, setArrayCartas] = useState([]);
+
+  function limpiarCartas() {
+    const cartas = document.querySelectorAll(".card");
+    cartas.forEach(elem => { elem.classList.remove("error"); elem.classList.remove("correcto"); })
+  }
+
 
   const fetchPokemones = async (limite = 4) => {
-    const random = Math.random() * 1000;
+    const random = Math.random() * 200;
     const inicio = Math.floor(random);
     /* console.log(inicio); */
     let enlace = "https://pokeapi.co/api/v2/";
@@ -26,8 +32,7 @@ function App() {
     for (let i = 0; i < 4; i++) {
       array.push(datos.results[i].name);
     }
-    setPokemon(array);
-    /* console.log(pokemon); */
+    setPokemon(array.sort());
 
     const promises = datos.results.map(async (pokemon) => {
       const res = await fetch(pokemon.url)
@@ -35,8 +40,12 @@ function App() {
       return data
     })
     const resultado = await Promise.all(promises)
+    let lista = [];
+    resultado.map((item) => {
+      lista.push(item.sprites.other.dream_world.front_default);
+    })
     setDatosPokemon(resultado)
-    console.log(resultado)
+    /* console.log(lista) */
   }
 
   useEffect(() => {
@@ -44,30 +53,30 @@ function App() {
   }, []);
 
 
-  function seleccionarPokemones(pokemones) {
+  /* function seleccionarPokemones(pokemones) {
     let array = [];
     for (let i = 0; i < 4; i++) {
-      let random = Math.random() * 1000;
+      let random = Math.random() * 100;
       let entero = Math.floor(random);
       let num = Math.floor(entero / 10);
-      /* console.log(pokemones[num]); */
+      console.log(pokemones[num]);
       array.push(pokemones[num]);
     }
     setarrayCartas(array);
     console.log(arrayCartas);
-    /* console.log(arrayCartas[0].name); */
-  }
+    console.log(arrayCartas[0].name);
+  } */
 
   return (
     <div className="App">
+      <Loader />
       <button className="button" onClick={() => {
+        limpiarCartas();
         fetchPokemones();
       }}>Revolver
       </button>
 
-      <Switch />
-
-      <main>
+      <main className='cont-main'>
         <div className="cont-imagenes">
 
           {
@@ -92,7 +101,7 @@ function App() {
         </div>
       </main>
 
-
+      <Switch />
 
     </div>
   )
