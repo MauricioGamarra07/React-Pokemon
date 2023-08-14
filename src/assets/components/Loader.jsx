@@ -4,13 +4,13 @@ function Loader() {
 
     function cargarCartas(){
         const loader = document.querySelector(".loader");
+        const contenedor = document.querySelector(".contenedor");
         loader.style.display = "none";
-        const main = document.querySelector(".main");
-        main.style.display = "flex";
+        contenedor.style.display = "flex";
     }
 
     useEffect(() => {
-        setTimeout(cargarCartas,5000)
+        setTimeout(cargarCartas,4000)
     }, [])
 
     return (

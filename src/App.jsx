@@ -70,38 +70,40 @@ function App() {
   return (
     <div className="App">
       <Loader />
-      <button className="button" onClick={() => {
-        limpiarCartas();
-        fetchPokemones();
-      }}>Revolver
-      </button>
+      <div className="contenedor" style={{display:"none"}}>
+        <button className="button" onClick={() => {
+          limpiarCartas();
+          fetchPokemones();
+        }}>Revolver
+        </button>
 
-      <main className='cont-main'>
-        <div className="cont-imagenes">
+        <main className='cont-main'>
+          <div className="cont-imagenes">
 
-          {
-            datosPokemon.map((item, index) => (
-              <div className={item.id} key={index} id='img'>
-                <img src={item.sprites.other.dream_world.front_default} className={item.name} onDragStart={(e) => {
-                  e.dataTransfer.setData("clase", e.target.className);
-                }} />
-              </div>
-            ))
+            {
+              datosPokemon.map((item, index) => (
+                <div className={item.id} key={index} id='img'>
+                  <img src={item.sprites.other.dream_world.front_default} className={item.name} onDragStart={(e) => {
+                    e.dataTransfer.setData("clase", e.target.className);
+                  }} />
+                </div>
+              ))
 
-          }
+            }
 
-        </div>
+          </div>
 
-        <div className="cont-cards">
-          {
-            pokemon.map((item, index) => (
-              <Cards key={index} name={item} />
-            ))
-          }
-        </div>
-      </main>
+          <div className="cont-cards">
+            {
+              pokemon.map((item, index) => (
+                <Cards key={index} name={item} />
+              ))
+            }
+          </div>
+        </main>
 
-      <Switch />
+        <Switch />
+      </div>
 
     </div>
   )
